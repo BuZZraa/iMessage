@@ -19,7 +19,7 @@ app.use(clerkMiddleware());
 app.use(
   "/api/webhooks/clerk",
   express.raw({ type: "application/json" }),
-  clerkWebhook,
+  clerkWebhook(),
 );
 
 app.get("/health", (req, res) => {whsec_a9NhaG660l0uRvB3HFtUa+zbtHO3DRfs
