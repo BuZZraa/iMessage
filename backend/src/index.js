@@ -23,7 +23,7 @@ app.use(
  clerkWebhook,
 );
 
-app.get("/health", (req, res) => {whsec_a9NhaG660l0uRvB3HFtUa+zbtHO3DRfs
+app.get("/health", (req, res) => {
   res.status(200).json({ ok: true });
 });
 
