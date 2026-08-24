@@ -8,7 +8,7 @@ import path from "path";
 import job from "./lib/cron.js";
 import clerkWebhook from "./webhooks/clerk.webhook.js"
 import authRoutes from "./routes/auth.route.js"
-
+import messageRoutes from "./routes/message.route.js"
 const app = express();
 
 const publicDir = path.join(process.cwd(), "public");
@@ -27,7 +27,10 @@ app.use(express.json());
 app.get("/health", (req, res) => {
   res.status(200).json({ ok: true });
 });
-app.use("/health", authRoutes)
+
+app.use("/api/auth", authRoutes)
+app.use("/api/messages", messageRoutes)
+
 
 
 //if the public directory exists, serve the static files
