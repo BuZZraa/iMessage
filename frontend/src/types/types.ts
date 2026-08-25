@@ -39,3 +39,9 @@ export type WallpaperContextType = {
     backgroundPosition: string;
   };
 };
+
+export type WallpaperThumbType = {
+  wallpaper: wallpaperType;
+  selected: boolean;
+  onSelect:(id: string) => void;
+};
