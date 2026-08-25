@@ -6,10 +6,10 @@ import cors from "cors";
 import fs from "fs";
 import path from "path";
 import job from "./lib/cron.js";
-import clerkWebhook from "./webhooks/clerk.webhook.js"
-import authRoutes from "./routes/auth.route.js"
-import messageRoutes from "./routes/message.route.js"
-const app = express();
+import clerkWebhook from "./webhooks/clerk.webhook.js";
+import authRoutes from "./routes/auth.route.js";
+import messageRoutes from "./routes/message.route.js";
+import { app, server } from "./lib/socket.js";
 
 const publicDir = path.join(process.cwd(), "public");
 
@@ -20,7 +20,7 @@ app.use(clerkMiddleware());
 app.use(
   "/api/webhooks/clerk",
   express.raw({ type: "application/json" }),
- clerkWebhook,
+  clerkWebhook,
 );
 app.use(express.json());
 
@@ -28,10 +28,8 @@ app.get("/health", (req, res) => {
   res.status(200).json({ ok: true });
 });
 
-app.use("/api/auth", authRoutes)
-app.use("/api/messages", messageRoutes)
-
-
+app.use("/api/auth", authRoutes);
+app.use("/api/messages", messageRoutes);
 
 //if the public directory exists, serve the static files
 //this is for the production build
@@ -43,7 +41,7 @@ if (fs.existsSync(publicDir)) {
   });
 }
 
-app.listen(process.env.PORT, () => {
+server.listen(process.env.PORT, () => {
   connectDB();
   console.log("Server is running on port 3000.");
 
