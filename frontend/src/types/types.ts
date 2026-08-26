@@ -1,4 +1,5 @@
 import type { Dispatch, SetStateAction } from "react";
+import type { Socket } from "socket.io-client";
 
 export type herouiThemePresetsType = {
   id: string;
@@ -43,5 +44,24 @@ export type WallpaperContextType = {
 export type WallpaperThumbType = {
   wallpaper: wallpaperType;
   selected: boolean;
-  onSelect:(id: string) => void;
+  onSelect: (id: string) => void;
+};
+
+type User = {
+  _id: string;
+  clerkId: string;
+  email: string;
+  fullName: string;
+  profilePic?: string;
+};
+
+export type authStoreType = {
+  authUser: string | null;
+  isCheckingAuth: boolean;
+  onlineUsers: string[];
+  socket: Socket | null;
+  checkAuth:  () => Promise<void>;
+  connectSocket: (user: User) => void;
+  disconnectSocket: () => void;
+  clearAuth: () => void;
 };
