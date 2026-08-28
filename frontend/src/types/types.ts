@@ -47,7 +47,7 @@ export type WallpaperThumbType = {
   onSelect: (id: string) => void;
 };
 
-type User = {
+export type User = {
   _id: string;
   clerkId: string;
   email: string;
@@ -60,8 +60,28 @@ export type authStoreType = {
   isCheckingAuth: boolean;
   onlineUsers: string[];
   socket: Socket | null;
-  checkAuth:  () => Promise<void>;
+  checkAuth: () => Promise<void>;
   connectSocket: (user: User) => void;
   disconnectSocket: () => void;
   clearAuth: () => void;
+};
+
+export type chatStoreType = {
+  users: User[];
+  conversations: [];
+  messages: [];
+  selectedUser: User | null;
+  isConversationsLoading: boolean;
+  isUsersLoading: boolean;
+  isMessagesLoading: boolean;
+  activeConversationId: null;
+  searchQuery: string;
+  sidebarTab: "chats" | "users";
+  composerText: string;
+  isSoundEnabled: boolean;
+  isSendingMedia: boolean;
+  getUsers: () => Promise<void>;
+  getConversations: () => Promise<void>;
+  getMessages: (userId: string) => Promise<void>;
+  
 };

@@ -4,13 +4,15 @@ import User from "../models/user.model.js";
 export async function protectRoute(req, res, next) {
   try {
     const { userId } = getAuth(req);
-
+    console.log("User id: ",userId);
     if (!userId) {
       res.status(401).json({ message: "Unauthorized" });
       return;
     }
 
     const user = await User.findOne({ clerkId: userId });
+    console.log("User id: ",userId);
+
     if (!user) {
       res.status(404).json({ message: "User profile is not synced yet." });
       return;

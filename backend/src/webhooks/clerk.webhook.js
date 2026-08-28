@@ -26,6 +26,7 @@ router.post("/", async (req, res) => {
 
     //throws if the signature is wrong or the body was tampered with; only then do we trust event.
     const event = await verifyWebhook(request, { signingSecret });
+    console.log(`[WEBHOOK] event=${event.type} clerkId=${user.id}`);
 
     if (event.type === "user.created" || event.type === "user.updated") {
       const user = event.data;
