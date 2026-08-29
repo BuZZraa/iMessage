@@ -13,8 +13,8 @@ function ChatPage() {
     getConversations,
     getMessages,
     getUsers,
-    subscribeToMessage,
-    unsubscribeFromMessage,
+    subscribeToMessages,
+    unsubscribeFromMessages,
   } = useChatStore();
   const { activeConversation, activeConversationId, isLargeScreen } =
     useSelectedConversation();
@@ -28,15 +28,15 @@ function ChatPage() {
     if (!activeConversationId) return;
 
     getMessages(activeConversationId);
-    subscribeToMessage(activeConversationId);
+    subscribeToMessages(activeConversationId);
 
     // cleanup
-    return () => unsubscribeFromMessage();
+    return () => unsubscribeFromMessages();
   }, [
     getMessages,
     activeConversationId,
-    subscribeToMessage,
-    unsubscribeFromMessage,
+    subscribeToMessages,
+    unsubscribeFromMessages,
   ]);
   return (
     <div

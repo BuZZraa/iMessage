@@ -1,4 +1,4 @@
-import type { Dispatch, SetStateAction } from "react";
+import type { Dispatch, ReactNode, SetStateAction } from "react";
 import type { Socket } from "socket.io-client";
 
 export type herouiThemePresetsType = {
@@ -69,19 +69,62 @@ export type authStoreType = {
 export type chatStoreType = {
   users: User[];
   conversations: [];
-  messages: [];
+  messages: messageType[];
   selectedUser: User | null;
   isConversationsLoading: boolean;
   isUsersLoading: boolean;
   isMessagesLoading: boolean;
-  activeConversationId: null;
+  activeConversationId: string | null;
   searchQuery: string;
-  sidebarTab: "chats" | "users";
+  sidebarTab: string;
   composerText: string;
   isSoundEnabled: boolean;
   isSendingMedia: boolean;
   getUsers: () => Promise<void>;
   getConversations: () => Promise<void>;
   getMessages: (userId: string) => Promise<void>;
-  
+  subscribeToMessages: (userId: string) => void;
+  unsubscribeFromMessages: () => void;
+  setActiveConversationId: (activeConversationId: string | null) => void;
+  setSoundEnabled: (isSoundEnabled: boolean) => void;
+  setSidebarTab: (sidebarTab: string) => void;
+  setComposerText: (composerText: string) => void;
+  setSearchQuery: (searchQuery: string) => void;
+  sendMessage: (messageData: OutgoingMessagePayload) => Promise<boolean>;
+  sendTextMessage: (conversationId: string) => Promise<boolean>;
+  sendMediaMessage: ({
+    conversationId,
+    file,
+  }: {
+    conversationId: string;
+    file: File;
+  }) => Promise<boolean>;
 };
+
+export type AvatarWithOnlineIndicatorType = {
+  isOnline: boolean;
+  children: ReactNode;
+  dotClassName?: string;
+};
+
+export type ConversationRowType = {
+  user: {
+    name: string;
+    avatarUrl: string | undefined;
+    initials: string;
+    isOnline: boolean;
+  };
+  selected: boolean;
+  onSelect: () => void;
+};
+
+export type messageType = {
+  id: string;
+  imageUrl?: string;
+  videoUrl?: string;
+  text?: string;
+  time: string;
+  role: string;
+};
+
+export type OutgoingMessagePayload = { text: string } | FormData;

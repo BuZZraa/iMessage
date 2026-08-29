@@ -7,15 +7,15 @@ import { isImageKitUrl, withTransform } from "../../lib/imagekit";
 const VIDEO_TRANSFORM = "q-80,w-640";
 const POSTER_TRANSFORM = "q-80,w-640";
 
-/** ImageKit can extract a poster frame by appending `/ik-thumbnail.jpg`. */
-function buildPosterUrl(url) {
+/** ImageKit can extract a poster frame by appendi ng `/ik-thumbnail.jpg`. */
+function buildPosterUrl(url: string) {
   if (!isImageKitUrl(url)) return undefined;
   const [path] = url.split("?");
   return withTransform(`${path}/ik-thumbnail.jpg`, POSTER_TRANSFORM);
 }
 
 /** ImageKit-optimized chat video with an auto-generated poster frame. */
-export default function MessageVideo({ src }) {
+export default function MessageVideo({ src }: {src: string}) {
   const optimizedSrc = withTransform(src, VIDEO_TRANSFORM);
   const posterSrc = buildPosterUrl(src);
 

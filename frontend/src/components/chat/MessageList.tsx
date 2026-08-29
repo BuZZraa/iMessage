@@ -1,7 +1,8 @@
 import useScrollToBottom from "../../hooks/useScrollToBottom";
 import MessageBubble from "./MessageBubble";
-import NoConversationPlaceholder  from "./NoConversationPlaceholder";
+import NoConversationPlaceholder from "./NoConversationPlaceholder";
 import { useSelectedConversation } from "../../hooks/useSelectedConversation";
+import type { messageType } from "../../types/types";
 
 export default function MessageList() {
   const { activeConversation, activeConversationId } =
@@ -23,7 +24,7 @@ export default function MessageList() {
           <p className="mb-3 text-center text-[11px] font-medium uppercase tracking-wide text-muted">
             Today
           </p>
-          {activeConversation.messages.map((message) => (
+          {activeConversation.messages.map((message: messageType) => (
             <MessageBubble key={message.id} message={message} />
           ))}
         </div>

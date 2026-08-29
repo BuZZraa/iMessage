@@ -1,7 +1,8 @@
 import { Avatar } from "@heroui/react";
 import { AvatarWithOnlineIndicator } from "./AvatarWithOnlineIndicator";
+import type { ConversationRowType } from "../../types/types";
 
-export function ConversationRow({ user, selected, onSelect }) {
+export function ConversationRow({ user, selected, onSelect }: ConversationRowType) {
   return (
     <button
       type="button"

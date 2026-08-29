@@ -14,31 +14,38 @@ export default function ChatComposer() {
   const setComposerText = useChatStore((state) => state.setComposerText);
   const { activeConversationId } = useSelectedConversation();
   const { playRandomKeyStrokeSound } = useKeyboardSound();
-  const mediaInputRef = useRef(null);
+  const mediaInputRef = useRef<HTMLInputElement>(null);
 
   const playSoundIfEnabled = () => {
     if (isSoundEnabled) playRandomKeyStrokeSound();
   };
 
   const handleSend = async () => {
-    const didSendMessage = await sendTextMessage(activeConversationId);
+    const didSendMessage =
+      activeConversationId && (await sendTextMessage(activeConversationId));
     if (didSendMessage) playSoundIfEnabled();
   };
 
-  const handleComposerTextChange = (event) => {
+  const handleComposerTextChange = (
+    event: React.ChangeEvent<HTMLTextAreaElement>,
+  ) => {
     setComposerText(event.target.value);
     playSoundIfEnabled();
   };
 
-  const handleMediaPick = async (event) => {
+  const handleMediaPick = async (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
     const file = event.target.files?.[0];
     event.target.value = "";
     if (!file) return;
 
-    const didSendMessage = await sendMediaMessage({
-      conversationId: activeConversationId,
-      file,
-    });
+    const didSendMessage =
+      activeConversationId &&
+      (await sendMediaMessage({
+        conversationId: activeConversationId,
+        file,
+      }));
 
     if (didSendMessage) playSoundIfEnabled();
   };
@@ -91,7 +98,12 @@ export default function ChatComposer() {
           className="flex-1 rounded-full"
         />
 
-        <Button variant="primary" isIconOnly isDisabled={!composerText.trim()} onPress={handleSend}>
+        <Button
+          variant="primary"
+          isIconOnly
+          isDisabled={!composerText.trim()}
+          onPress={handleSend}
+        >
           <SendHorizontalIcon className="size-5" />
         </Button>
       </div>
