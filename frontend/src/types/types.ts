@@ -56,7 +56,7 @@ export type User = {
 };
 
 export type authStoreType = {
-  authUser: string | null;
+  authUser: User | null;
   isCheckingAuth: boolean;
   onlineUsers: string[];
   socket: Socket | null;
@@ -69,7 +69,7 @@ export type authStoreType = {
 export type chatStoreType = {
   users: User[];
   conversations: [];
-  messages: messageType[];
+  messages: mapMessageType[];
   selectedUser: User | null;
   isConversationsLoading: boolean;
   isUsersLoading: boolean;
@@ -128,3 +128,12 @@ export type messageType = {
 };
 
 export type OutgoingMessagePayload = { text: string } | FormData;
+
+export type mapMessageType = {
+  _id: string;
+  senderId: string;
+  text: string;
+  createdAt: string;
+  image: string;
+  video: string;
+};

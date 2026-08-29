@@ -2,7 +2,7 @@ import { useMediaQuery } from "./useMediaQuery";
 import { formatMessageTime } from "../lib/utils";
 import { useChatStore } from "../store/useChatStore";
 import { useAuthStore } from "../store/useAuthStore";
-import type { User } from "../types/types";
+import type { mapMessageType, User } from "../types/types";
 
 // John Doe -> JD
 export function getInitials(name: string) {
@@ -19,7 +19,17 @@ export function getInitials(name: string) {
 // 1. Messages → UI messages
 // 2. User → peer
 
-function mapUserToConversation({ user, messages, authUser, onlineUsers }) {
+function mapUserToConversation({
+  user,
+  messages,
+  authUser,
+  onlineUsers,
+}: {
+  user: User;
+  messages: mapMessageType[];
+  authUser: { _id: string }| null;
+  onlineUsers: string[];
+}) {
   const mappedMessages = messages.map((message) => ({
     id: message._id,
     role: String(message.senderId) === String(authUser?._id) ? "me" : "them",
